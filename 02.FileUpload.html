@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <style type="text/css">
+        #parent {
+            width: 500px;
+            height: 30px;
+            border: 1px solid #666;
+            position: relative;
+            display: none;
+        }
+
+        #child {
+            width: 0%;
+            height: 30px;
+            background: pink;
+            position: absolute;
+            left: 0;
+            top: 0;
+            display: none;
+            line-height: 30px
+        }
+    </style>
+</head>
+<body>
+<form>
+    <p>用户名：<input type="text" name="user"></p>
+    <p>密&nbsp;&nbsp;码：<input type="password" name="pwd"></p>
+    <p>邮&nbsp;&nbsp;箱：<input type="text" name="email"></p>
+    <p>头&nbsp;&nbsp;像：<input type="file" name="user_pic"></p>
+    <progress style="display: none" id="pro"></progress>
+    <p>
+        <button>提交</button>
+    </p>
+</form>
+<script type="text/javascript">
+    var button = document.getElementsByTagName('button')[0];
+
+    button.onclick = function () {
+
+        var oForm = document.getElementsByTagName('form')[0];
+        var content = new FormData(oForm);
+        var pro = document.getElementById('pro');
+        console.log(content);
+
+        //以ajax的方式发送到服务器
+        try {
+            var xhr = new XMLHttpRequest();
+        } catch (error) {
+            try {
+                var xhr = new ActiveXObject("Msxml2.XMLHTTP");
+            } catch (error) {
+                alert('浏览器太低了，请更新');
+            }
+        }
+        //监视文件上传的进度，每上传有点就会触发该事件
+        xhr.upload.onprogress = function (evt) {
+            // console.log(evt);
+
+            pro.setAttribute('max', evt.total);//上传文件的总大小
+            pro.setAttribute('value', evt.loaded);//已上传的文件大小
+            pro.style.display = 'block';
+
+            if (evt.total == evt.loaded) {
+                pro.style.display = 'none';
+            }
+        }
+        xhr.open('POST', 'upload.php', true);
+        xhr.send(content);
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.responseText);
+            }
+        }
+        //阻止提交表单
+        return false;
+    }
+
+</script>
+</body>
+</html>
