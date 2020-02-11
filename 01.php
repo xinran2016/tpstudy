@@ -76,3 +76,4 @@ echo 'ok';
 // add a test.
 
 $a  = 8;
+$a  = 8;
