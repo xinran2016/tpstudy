@@ -72,3 +72,7 @@ echo 'ok';
 //$res = $mem->getStats();
 //echo '<pre>';
 //print_r($res);
+
+// add a test.
+
+$a  = 8;
