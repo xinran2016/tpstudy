@@ -14,7 +14,7 @@
 //    echo $file. '<br/>';
 //}
 
-phpinfo();die;
+//phpinfo();die;
 $mem  = new Memcache();//实例化一个类，创建一个对象
 
 $mem->connect('localhost',11211);//连接memcache服务器
